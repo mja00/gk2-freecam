@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>GK2Freecam</AssemblyName>
+    <RootNamespace>GK2Freecam</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GameDir Condition="'$(GameDir)' == ''">/mnt/data-drive/SteamLibrary/steamapps/common/Graveyard Keeper 2</GameDir>
+    <ManagedDir>$(GameDir)/GraveyardKeeper2_Data/Managed</ManagedDir>
+    <!-- Compile against the game's own Mono BCL so no .NET Framework targeting pack is needed on Linux. -->
+    <FrameworkPathOverride>$(ManagedDir)</FrameworkPathOverride>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="mscorlib" HintPath="$(ManagedDir)/mscorlib.dll" Private="false" />
+    <Reference Include="System" HintPath="$(ManagedDir)/System.dll" Private="false" />
+    <Reference Include="System.Core" HintPath="$(ManagedDir)/System.Core.dll" Private="false" />
+    <Reference Include="netstandard" HintPath="$(ManagedDir)/netstandard.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(ManagedDir)/UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(ManagedDir)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.InputLegacyModule" HintPath="$(ManagedDir)/UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="UnityEngine.IMGUIModule" HintPath="$(ManagedDir)/UnityEngine.IMGUIModule.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(ManagedDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Cinemachine" HintPath="$(ManagedDir)/Cinemachine.dll" Private="false" />
+    <Reference Include="LazyBearTechnology" HintPath="$(ManagedDir)/LazyBearTechnology.dll" Private="false" />
+    <Reference Include="BepInEx" HintPath="$(GameDir)/BepInEx/core/BepInEx.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(GameDir)/BepInEx/core/0Harmony.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="DeployPlugin" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)/BepInEx/plugins" />
+  </Target>
+
+</Project>
